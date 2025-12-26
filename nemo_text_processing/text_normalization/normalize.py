@@ -181,6 +181,9 @@ class Normalizer:
 
             if post_process:
                 self.post_processor = PostProcessingFst(cache_dir=cache_dir, overwrite_cache=overwrite_cache)
+        elif lang == 'fa':
+            from nemo_text_processing.text_normalization.fa.taggers.tokenize_and_classify import ClassifyFst
+            from nemo_text_processing.text_normalization.fa.verbalizers.verbalize_final import VerbalizeFinalFst
         else:
             raise NotImplementedError(f"Language {lang} has not been supported yet.")
 

@@ -131,9 +131,14 @@ class InverseNormalizer(Normalizer):
             from nemo_text_processing.inverse_text_normalization.ja.verbalizers.verbalize_final import (
                 VerbalizeFinalFst,
             )
-        elif lang == 'he':  # Japanese
+        elif lang == 'he':  # Hebrew
             from nemo_text_processing.inverse_text_normalization.he.taggers.tokenize_and_classify import ClassifyFst
             from nemo_text_processing.inverse_text_normalization.he.verbalizers.verbalize_final import (
+                VerbalizeFinalFst,
+            )
+        elif lang == 'fa':  # Persian (Farsi)
+            from nemo_text_processing.inverse_text_normalization.fa.taggers.tokenize_and_classify import ClassifyFst
+            from nemo_text_processing.inverse_text_normalization.fa.verbalizers.verbalize_final import (
                 VerbalizeFinalFst,
             )
 

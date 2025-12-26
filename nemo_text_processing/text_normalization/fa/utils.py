@@ -1,0 +1,63 @@
+# Copyright (c) 2024, NVIDIA CORPORATION & AFFILIATES.  All rights reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+import csv
+import os
+
+
+def get_abs_path(rel_path):
+    """
+    Get absolute path
+
+    Args:
+        rel_path: relative path to this file
+
+    Returns absolute path
+    """
+    return os.path.dirname(os.path.abspath(__file__)) + '/' + rel_path
+
+
+def load_labels(abs_path):
+    """
+    loads relative path file as dictionary
+
+    Args:
+        abs_path: absolute path
+
+    Returns dictionary of mappings
+    """
+    with open(abs_path, encoding="utf-8") as label_tsv:
+        labels = list(csv.reader(label_tsv, delimiter="\t"))
+    return labels
+
+
+def augment_labels_with_punct_at_end(labels):
+    """
+    augments labels: if key ends on a punctuation that value does not have, add a new label
+    where the value maintains the punctuation
+
+    Args:
+        labels: list of labels
+
+    Returns augmented list of labels
+    """
+    punct = [".", "،", "؟", "!", "؛"]  # Persian punctuation marks
+    new_labels = []
+    for label in labels:
+        if len(label) == 2:
+            key, value = label
+            for p in punct:
+                if key.endswith(p) and not value.endswith(p):
+                    new_labels.append([key, value + p])
+    return labels + new_labels
