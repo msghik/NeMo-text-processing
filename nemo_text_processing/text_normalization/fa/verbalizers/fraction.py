@@ -15,11 +15,7 @@
 import pynini
 from pynini.lib import pynutil
 
-from nemo_text_processing.text_normalization.fa.graph_utils import (
-    NEMO_NOT_QUOTE,
-    GraphFst,
-    insert_space,
-)
+from nemo_text_processing.text_normalization.fa.graph_utils import NEMO_NOT_QUOTE, GraphFst, insert_space
 
 
 class FractionFst(GraphFst):
@@ -36,11 +32,7 @@ class FractionFst(GraphFst):
         super().__init__(name="fraction", kind="verbalize", deterministic=deterministic)
 
         # Optional integer part
-        integer_part = (
-            pynutil.delete('integer_part: "')
-            + pynini.closure(NEMO_NOT_QUOTE, 1)
-            + pynutil.delete('"')
-        )
+        integer_part = pynutil.delete('integer_part: "') + pynini.closure(NEMO_NOT_QUOTE, 1) + pynutil.delete('"')
         optional_integer = pynini.closure(
             integer_part + pynutil.insert(" و ") + pynutil.delete(" "),
             0,
@@ -48,18 +40,10 @@ class FractionFst(GraphFst):
         )
 
         # Numerator
-        numerator = (
-            pynutil.delete('numerator: "')
-            + pynini.closure(NEMO_NOT_QUOTE, 1)
-            + pynutil.delete('"')
-        )
+        numerator = pynutil.delete('numerator: "') + pynini.closure(NEMO_NOT_QUOTE, 1) + pynutil.delete('"')
 
         # Denominator
-        denominator = (
-            pynutil.delete('denominator: "')
-            + pynini.closure(NEMO_NOT_QUOTE, 1)
-            + pynutil.delete('"')
-        )
+        denominator = pynutil.delete('denominator: "') + pynini.closure(NEMO_NOT_QUOTE, 1) + pynutil.delete('"')
 
         self.graph = optional_integer + numerator + insert_space + pynutil.delete(" ") + denominator
 

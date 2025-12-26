@@ -15,12 +15,7 @@
 import pynini
 from pynini.lib import pynutil
 
-from nemo_text_processing.text_normalization.fa.graph_utils import (
-    NEMO_NOT_QUOTE,
-    GraphFst,
-    delete_space,
-    insert_space,
-)
+from nemo_text_processing.text_normalization.fa.graph_utils import NEMO_NOT_QUOTE, GraphFst, delete_space, insert_space
 
 
 class TimeFst(GraphFst):
@@ -38,25 +33,13 @@ class TimeFst(GraphFst):
         super().__init__(name="time", kind="verbalize", deterministic=deterministic)
 
         # Hours
-        hours = (
-            pynutil.delete('hours: "')
-            + pynini.closure(NEMO_NOT_QUOTE, 1)
-            + pynutil.delete('"')
-        )
+        hours = pynutil.delete('hours: "') + pynini.closure(NEMO_NOT_QUOTE, 1) + pynutil.delete('"')
 
         # Minutes
-        minutes = (
-            pynutil.delete('minutes: "')
-            + pynini.closure(NEMO_NOT_QUOTE, 1)
-            + pynutil.delete('"')
-        )
+        minutes = pynutil.delete('minutes: "') + pynini.closure(NEMO_NOT_QUOTE, 1) + pynutil.delete('"')
 
         # Suffix (am/pm)
-        suffix = (
-            pynutil.delete('suffix: "')
-            + pynini.closure(NEMO_NOT_QUOTE, 1)
-            + pynutil.delete('"')
-        )
+        suffix = pynutil.delete('suffix: "') + pynini.closure(NEMO_NOT_QUOTE, 1) + pynutil.delete('"')
 
         # Persian time prefix: ساعت (saat = o'clock)
         time_prefix = pynutil.insert("ساعت ")
@@ -68,12 +51,7 @@ class TimeFst(GraphFst):
         # Hours and minutes
         # Special case for نیم (half) and ربع (quarter)
         graph_hours_minutes = (
-            time_prefix
-            + hours
-            + pynutil.insert(" و ")
-            + delete_space
-            + minutes
-            + pynutil.insert(" دقیقه")
+            time_prefix + hours + pynutil.insert(" و ") + delete_space + minutes + pynutil.insert(" دقیقه")
         )
 
         # With suffix

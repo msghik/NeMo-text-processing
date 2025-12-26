@@ -49,20 +49,62 @@ try:
 
     # Persian-specific characters
     FA_ALPHA = pynini.union(
-        "آ", "ا", "ب", "پ", "ت", "ث", "ج", "چ", "ح", "خ",
-        "د", "ذ", "ر", "ز", "ژ", "س", "ش", "ص", "ض", "ط",
-        "ظ", "ع", "غ", "ف", "ق", "ک", "گ", "ل", "م", "ن",
-        "و", "ه", "ی", "ئ", "ء", "ة"
+        "آ",
+        "ا",
+        "ب",
+        "پ",
+        "ت",
+        "ث",
+        "ج",
+        "چ",
+        "ح",
+        "خ",
+        "د",
+        "ذ",
+        "ر",
+        "ز",
+        "ژ",
+        "س",
+        "ش",
+        "ص",
+        "ض",
+        "ط",
+        "ظ",
+        "ع",
+        "غ",
+        "ف",
+        "ق",
+        "ک",
+        "گ",
+        "ل",
+        "م",
+        "ن",
+        "و",
+        "ه",
+        "ی",
+        "ئ",
+        "ء",
+        "ة",
     ).optimize()
 
     # Persian digits (۰-۹)
     FA_DIGIT = pynini.union("۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹").optimize()
 
     # Mapping from Persian digits to ASCII digits
-    FA_TO_ASCII_DIGIT = pynini.string_map([
-        ("۰", "0"), ("۱", "1"), ("۲", "2"), ("۳", "3"), ("۴", "4"),
-        ("۵", "5"), ("۶", "6"), ("۷", "7"), ("۸", "8"), ("۹", "9"),
-    ]).optimize()
+    FA_TO_ASCII_DIGIT = pynini.string_map(
+        [
+            ("۰", "0"),
+            ("۱", "1"),
+            ("۲", "2"),
+            ("۳", "3"),
+            ("۴", "4"),
+            ("۵", "5"),
+            ("۶", "6"),
+            ("۷", "7"),
+            ("۸", "8"),
+            ("۹", "9"),
+        ]
+    ).optimize()
 
     delete_space = pynutil.delete(pynini.closure(NEMO_WHITE_SPACE))
     delete_zero_or_one_space = pynutil.delete(pynini.closure(NEMO_WHITE_SPACE, 0, 1))

@@ -34,7 +34,7 @@ class VerbalizeFinalFst(GraphFst):
         super().__init__(name="verbalize_final", kind="verbalize")
 
         verbalize = VerbalizeFst().fst
-        
+
         # Word graph for handling plain words
         word = (
             pynutil.delete("name:")

@@ -39,7 +39,7 @@ class CardinalFst(GraphFst):
             0,
             1,
         )
-        
+
         # Build negative graph separately
         negative_graph = (
             pynutil.delete("negative:")

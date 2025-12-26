@@ -15,10 +15,7 @@
 import pynini
 from pynini.lib import pynutil
 
-from nemo_text_processing.text_normalization.fa.graph_utils import (
-    NEMO_NOT_QUOTE,
-    GraphFst,
-)
+from nemo_text_processing.text_normalization.fa.graph_utils import NEMO_NOT_QUOTE, GraphFst
 
 
 class OrdinalFst(GraphFst):
@@ -33,11 +30,7 @@ class OrdinalFst(GraphFst):
     def __init__(self, deterministic: bool = True):
         super().__init__(name="ordinal", kind="verbalize", deterministic=deterministic)
 
-        integer = (
-            pynutil.delete('integer: "')
-            + pynini.closure(NEMO_NOT_QUOTE, 1)
-            + pynutil.delete('"')
-        )
+        integer = pynutil.delete('integer: "') + pynini.closure(NEMO_NOT_QUOTE, 1) + pynutil.delete('"')
 
         self.graph = integer
         delete_tokens = self.delete_tokens(self.graph)

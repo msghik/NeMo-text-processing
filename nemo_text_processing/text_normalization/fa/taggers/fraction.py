@@ -47,18 +47,10 @@ class FractionFst(GraphFst):
         graph_numerator = pynutil.insert('numerator: "') + cardinal_graph + pynutil.insert('"')
 
         # Denominator (ordinal form for small numbers)
-        graph_denom_small = (
-            pynutil.insert('denominator: "')
-            + graph_denominator
-            + pynutil.insert('"')
-        )
+        graph_denom_small = pynutil.insert('denominator: "') + graph_denominator + pynutil.insert('"')
 
         # For larger denominators, use cardinal + م
-        graph_denom_large = (
-            pynutil.insert('denominator: "')
-            + cardinal_graph
-            + pynutil.insert('م"')
-        )
+        graph_denom_large = pynutil.insert('denominator: "') + cardinal_graph + pynutil.insert('م"')
 
         # Fraction separator
         divider = pynini.cross("/", '" ') | pynini.cross(" / ", '" ')
@@ -74,11 +66,7 @@ class FractionFst(GraphFst):
         fraction_graph = graph_fraction_small | pynutil.add_weight(graph_fraction_large, 0.1)
 
         # Optional integer part (e.g., "2 1/2")
-        integer_part = (
-            pynutil.insert('integer_part: "')
-            + cardinal_graph
-            + pynutil.insert('" ')
-        )
+        integer_part = pynutil.insert('integer_part: "') + cardinal_graph + pynutil.insert('" ')
         optional_integer = pynini.closure(integer_part + pynutil.delete(" "), 0, 1)
 
         # Special case: 1/2 = نیم

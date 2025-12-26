@@ -57,13 +57,7 @@ class DecimalFst(GraphFst):
         )
 
         # Combine: negative + integer + "." + fractional
-        graph = (
-            optional_negative
-            + integer_graph
-            + pynutil.insert(".")
-            + delete_space
-            + fractional_graph
-        )
+        graph = optional_negative + integer_graph + pynutil.insert(".") + delete_space + fractional_graph
 
         delete_tokens = self.delete_tokens(graph)
         self.fst = delete_tokens.optimize()

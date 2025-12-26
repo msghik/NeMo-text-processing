@@ -36,14 +36,16 @@ class MoneyFst(GraphFst):
         cardinal_graph = itn_cardinal_tagger.graph
 
         # Currency mapping (spoken -> written symbol)
-        currency_map = pynini.string_map([
-            ("دلار", "$"),
-            ("یورو", "€"),
-            ("پوند", "£"),
-            ("ین", "¥"),
-            ("ریال", "ریال"),
-            ("تومان", "تومان"),
-        ])
+        currency_map = pynini.string_map(
+            [
+                ("دلار", "$"),
+                ("یورو", "€"),
+                ("پوند", "£"),
+                ("ین", "¥"),
+                ("ریال", "ریال"),
+                ("تومان", "تومان"),
+            ]
+        )
 
         # Integer part
         graph_integer = pynutil.insert('integer_part: "') + cardinal_graph + pynutil.insert('"')

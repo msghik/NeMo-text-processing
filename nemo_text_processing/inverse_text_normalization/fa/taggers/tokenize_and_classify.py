@@ -18,14 +18,15 @@ import pynini
 from pynini.lib import pynutil
 
 from nemo_text_processing.inverse_text_normalization.fa.taggers.cardinal import CardinalFst
+from nemo_text_processing.inverse_text_normalization.fa.taggers.date import DateFst
 from nemo_text_processing.inverse_text_normalization.fa.taggers.decimal import DecimalFst
 from nemo_text_processing.inverse_text_normalization.fa.taggers.fraction import FractionFst
-from nemo_text_processing.inverse_text_normalization.fa.taggers.time import TimeFst
-from nemo_text_processing.inverse_text_normalization.fa.taggers.date import DateFst
-from nemo_text_processing.inverse_text_normalization.fa.taggers.money import MoneyFst
 from nemo_text_processing.inverse_text_normalization.fa.taggers.measure import MeasureFst
+from nemo_text_processing.inverse_text_normalization.fa.taggers.money import MoneyFst
 from nemo_text_processing.inverse_text_normalization.fa.taggers.punctuation import PunctuationFst
+from nemo_text_processing.inverse_text_normalization.fa.taggers.time import TimeFst
 from nemo_text_processing.inverse_text_normalization.fa.taggers.word import WordFst
+from nemo_text_processing.text_normalization.en.graph_utils import INPUT_LOWER_CASED
 from nemo_text_processing.text_normalization.fa.graph_utils import (
     GraphFst,
     delete_extra_space,
@@ -33,7 +34,6 @@ from nemo_text_processing.text_normalization.fa.graph_utils import (
     generator_main,
 )
 from nemo_text_processing.text_normalization.fa.taggers.tokenize_and_classify import ClassifyFst as TNClassifyFst
-from nemo_text_processing.text_normalization.en.graph_utils import INPUT_LOWER_CASED
 from nemo_text_processing.utils.logging import logger
 
 

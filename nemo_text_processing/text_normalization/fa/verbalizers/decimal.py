@@ -15,11 +15,7 @@
 import pynini
 from pynini.lib import pynutil
 
-from nemo_text_processing.text_normalization.fa.graph_utils import (
-    NEMO_NOT_QUOTE,
-    GraphFst,
-    delete_space,
-)
+from nemo_text_processing.text_normalization.fa.graph_utils import NEMO_NOT_QUOTE, GraphFst, delete_space
 
 
 class DecimalFst(GraphFst):
@@ -48,17 +44,11 @@ class DecimalFst(GraphFst):
         )
 
         # Integer part
-        integer_part = (
-            pynutil.delete('integer_part: "')
-            + pynini.closure(NEMO_NOT_QUOTE, 1)
-            + pynutil.delete('"')
-        )
+        integer_part = pynutil.delete('integer_part: "') + pynini.closure(NEMO_NOT_QUOTE, 1) + pynutil.delete('"')
 
         # Fractional part
         fractional_part = (
-            pynutil.delete('fractional_part: "')
-            + pynini.closure(NEMO_NOT_QUOTE, 1)
-            + pynutil.delete('"')
+            pynutil.delete('fractional_part: "') + pynini.closure(NEMO_NOT_QUOTE, 1) + pynutil.delete('"')
         )
 
         # Persian decimal point word: ممیز (momayez)

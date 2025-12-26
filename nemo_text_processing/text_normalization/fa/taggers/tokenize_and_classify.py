@@ -17,6 +17,7 @@ import os
 import pynini
 from pynini.lib import pynutil
 
+from nemo_text_processing.text_normalization.en.taggers.punctuation import PunctuationFst
 from nemo_text_processing.text_normalization.fa.graph_utils import (
     NEMO_CHAR,
     NEMO_DIGIT,
@@ -26,15 +27,14 @@ from nemo_text_processing.text_normalization.fa.graph_utils import (
     generator_main,
 )
 from nemo_text_processing.text_normalization.fa.taggers.cardinal import CardinalFst
-from nemo_text_processing.text_normalization.fa.taggers.decimal import DecimalFst
-from nemo_text_processing.text_normalization.fa.taggers.ordinal import OrdinalFst
-from nemo_text_processing.text_normalization.fa.taggers.fraction import FractionFst
-from nemo_text_processing.text_normalization.fa.taggers.time import TimeFst
 from nemo_text_processing.text_normalization.fa.taggers.date import DateFst
-from nemo_text_processing.text_normalization.fa.taggers.money import MoneyFst
+from nemo_text_processing.text_normalization.fa.taggers.decimal import DecimalFst
+from nemo_text_processing.text_normalization.fa.taggers.fraction import FractionFst
 from nemo_text_processing.text_normalization.fa.taggers.measure import MeasureFst
+from nemo_text_processing.text_normalization.fa.taggers.money import MoneyFst
+from nemo_text_processing.text_normalization.fa.taggers.ordinal import OrdinalFst
+from nemo_text_processing.text_normalization.fa.taggers.time import TimeFst
 from nemo_text_processing.text_normalization.fa.taggers.word import WordFst
-from nemo_text_processing.text_normalization.en.taggers.punctuation import PunctuationFst
 from nemo_text_processing.utils.logging import logger
 
 
@@ -111,9 +111,7 @@ class ClassifyFst(GraphFst):
             self.money = MoneyFst(cardinal=self.cardinal, deterministic=deterministic)
             money_graph = self.money.fst
 
-            self.measure = MeasureFst(
-                cardinal=self.cardinal, decimal=self.decimal, deterministic=deterministic
-            )
+            self.measure = MeasureFst(cardinal=self.cardinal, decimal=self.decimal, deterministic=deterministic)
             measure_graph = self.measure.fst
 
             word_graph = WordFst(deterministic=deterministic).fst

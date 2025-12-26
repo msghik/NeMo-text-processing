@@ -15,8 +15,8 @@
 import pynini
 from pynini.lib import pynutil
 
-from nemo_text_processing.text_normalization.fa.graph_utils import GraphFst, insert_space
 from nemo_text_processing.inverse_text_normalization.fa.utils import get_abs_path
+from nemo_text_processing.text_normalization.fa.graph_utils import GraphFst, insert_space
 
 
 class TimeFst(GraphFst):
@@ -38,10 +38,12 @@ class TimeFst(GraphFst):
         cardinal_graph = pynini.invert(tn_cardinal.cardinal_numbers).optimize()
 
         # Special minute mappings
-        minute_special = pynini.string_map([
-            ("نیم", "30"),
-            ("ربع", "15"),
-        ])
+        minute_special = pynini.string_map(
+            [
+                ("نیم", "30"),
+                ("ربع", "15"),
+            ]
+        )
         minute_graph = minute_special | cardinal_graph
 
         # Time prefix: "ساعت"
@@ -62,16 +64,14 @@ class TimeFst(GraphFst):
         optional_minutes = pynini.closure(graph_minutes, 0, 1)
 
         # Suffix (am/pm) - optional
-        suffix_map = pynini.string_map([
-            ("صبح", "am"),
-            ("بعد از ظهر", "pm"),
-        ])
+        suffix_map = pynini.string_map(
+            [
+                ("صبح", "am"),
+                ("بعد از ظهر", "pm"),
+            ]
+        )
         graph_suffix = (
-            pynutil.delete(" ")
-            + insert_space
-            + pynutil.insert('suffix: "')
-            + suffix_map
-            + pynutil.insert('"')
+            pynutil.delete(" ") + insert_space + pynutil.insert('suffix: "') + suffix_map + pynutil.insert('"')
         )
         optional_suffix = pynini.closure(graph_suffix, 0, 1)
 

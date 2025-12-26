@@ -54,9 +54,7 @@ class DecimalFst(GraphFst):
         # 3 digits -> هزارم (thousandths)
         add_of = pynutil.insert(" ")
 
-        graph_fractional_one = (
-            NEMO_DIGIT @ cardinal_numbers_with_leading_zeros + add_of + pynutil.insert("دهم")
-        )
+        graph_fractional_one = NEMO_DIGIT @ cardinal_numbers_with_leading_zeros + add_of + pynutil.insert("دهم")
         graph_fractional_two = (
             (NEMO_DIGIT + NEMO_DIGIT) @ cardinal_numbers_with_leading_zeros + add_of + pynutil.insert("صدم")
         )
@@ -82,13 +80,9 @@ class DecimalFst(GraphFst):
         )
 
         # Handle negative numbers
-        optional_minus = pynini.closure(
-            pynutil.insert("negative: ") + pynini.cross("-", '"true" '), 0, 1
-        )
+        optional_minus = pynini.closure(pynutil.insert("negative: ") + pynini.cross("-", '"true" '), 0, 1)
 
-        self.final_graph_decimal = (
-            optional_minus + graph_integer_or_none + insert_space + graph_fractional_final
-        )
+        self.final_graph_decimal = optional_minus + graph_integer_or_none + insert_space + graph_fractional_final
 
         final_graph = self.add_tokens(self.final_graph_decimal)
         self.fst = final_graph.optimize()

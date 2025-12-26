@@ -15,11 +15,7 @@
 import pynini
 from pynini.lib import pynutil
 
-from nemo_text_processing.text_normalization.fa.graph_utils import (
-    NEMO_DIGIT,
-    GraphFst,
-    insert_space,
-)
+from nemo_text_processing.text_normalization.fa.graph_utils import NEMO_DIGIT, GraphFst, insert_space
 from nemo_text_processing.text_normalization.fa.utils import get_abs_path
 
 
@@ -49,9 +45,7 @@ class DateFst(GraphFst):
         months_gregorian = pynini.string_file(get_abs_path("data/date/months_gregorian.tsv"))
 
         # Day: 1-31
-        delete_leading_zero = (NEMO_DIGIT + NEMO_DIGIT) | (
-            pynini.closure(pynutil.delete("0"), 0, 1) + NEMO_DIGIT
-        )
+        delete_leading_zero = (NEMO_DIGIT + NEMO_DIGIT) | (pynini.closure(pynutil.delete("0"), 0, 1) + NEMO_DIGIT)
         labels_day = [str(x) for x in range(1, 32)]
         graph_day = delete_leading_zero @ pynini.union(*labels_day) @ cardinal_graph
 

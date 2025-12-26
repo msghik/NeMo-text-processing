@@ -15,12 +15,7 @@
 import pynini
 from pynini.lib import pynutil
 
-from nemo_text_processing.text_normalization.fa.graph_utils import (
-    NEMO_NOT_QUOTE,
-    GraphFst,
-    delete_space,
-    insert_space,
-)
+from nemo_text_processing.text_normalization.fa.graph_utils import NEMO_NOT_QUOTE, GraphFst, delete_space, insert_space
 
 
 class DateFst(GraphFst):
@@ -38,48 +33,23 @@ class DateFst(GraphFst):
         super().__init__(name="date", kind="verbalize", deterministic=deterministic)
 
         # Day
-        day = (
-            pynutil.delete('day: "')
-            + pynini.closure(NEMO_NOT_QUOTE, 1)
-            + pynutil.delete('"')
-        )
+        day = pynutil.delete('day: "') + pynini.closure(NEMO_NOT_QUOTE, 1) + pynutil.delete('"')
 
         # Month
-        month = (
-            pynutil.delete('month: "')
-            + pynini.closure(NEMO_NOT_QUOTE, 1)
-            + pynutil.delete('"')
-        )
+        month = pynutil.delete('month: "') + pynini.closure(NEMO_NOT_QUOTE, 1) + pynutil.delete('"')
 
         # Year
-        year = (
-            pynutil.delete('year: "')
-            + pynini.closure(NEMO_NOT_QUOTE, 1)
-            + pynutil.delete('"')
-        )
+        year = pynutil.delete('year: "') + pynini.closure(NEMO_NOT_QUOTE, 1) + pynutil.delete('"')
 
         # Persian date verbalization: Day + Month + Year
         # Adding "م" suffix to day for ordinal (e.g., پانزدهم)
         graph_dmy = (
-            day
-            + pynutil.insert("م ")  # ordinal suffix
-            + delete_space
-            + month
-            + insert_space
-            + delete_space
-            + year
+            day + pynutil.insert("م ") + delete_space + month + insert_space + delete_space + year  # ordinal suffix
         )
 
         # Alternative: Year + Month + Day (for when year comes first in input)
         graph_ymd = (
-            year
-            + delete_space
-            + insert_space
-            + month
-            + delete_space
-            + insert_space
-            + day
-            + pynutil.insert("م")
+            year + delete_space + insert_space + month + delete_space + insert_space + day + pynutil.insert("م")
         )
 
         self.graph = graph_dmy | graph_ymd

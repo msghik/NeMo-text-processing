@@ -15,11 +15,7 @@
 import pynini
 from pynini.lib import pynutil
 
-from nemo_text_processing.text_normalization.fa.graph_utils import (
-    NEMO_NOT_QUOTE,
-    GraphFst,
-    delete_space,
-)
+from nemo_text_processing.text_normalization.fa.graph_utils import NEMO_NOT_QUOTE, GraphFst, delete_space
 
 
 class CardinalFst(GraphFst):
@@ -48,10 +44,7 @@ class CardinalFst(GraphFst):
 
         # Extract integer value
         integer = (
-            pynutil.delete("integer: ")
-            + pynutil.delete('"')
-            + pynini.closure(NEMO_NOT_QUOTE, 1)
-            + pynutil.delete('"')
+            pynutil.delete("integer: ") + pynutil.delete('"') + pynini.closure(NEMO_NOT_QUOTE, 1) + pynutil.delete('"')
         )
 
         self.fst = (optional_sign + integer).optimize()

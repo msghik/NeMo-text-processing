@@ -15,12 +15,7 @@
 import pynini
 from pynini.lib import pynutil
 
-from nemo_text_processing.text_normalization.fa.graph_utils import (
-    NEMO_DIGIT,
-    GraphFst,
-    delete_space,
-    insert_space,
-)
+from nemo_text_processing.text_normalization.fa.graph_utils import NEMO_DIGIT, GraphFst, delete_space, insert_space
 from nemo_text_processing.text_normalization.fa.utils import get_abs_path
 
 
@@ -54,9 +49,7 @@ class TimeFst(GraphFst):
         labels_hour = [str(x) for x in range(0, 24)]
 
         # Delete leading zero for hours
-        delete_leading_zero = (NEMO_DIGIT + NEMO_DIGIT) | (
-            pynini.closure(pynutil.delete("0"), 0, 1) + NEMO_DIGIT
-        )
+        delete_leading_zero = (NEMO_DIGIT + NEMO_DIGIT) | (pynini.closure(pynutil.delete("0"), 0, 1) + NEMO_DIGIT)
 
         graph_hour = delete_leading_zero @ pynini.union(*labels_hour) @ cardinal_graph
 

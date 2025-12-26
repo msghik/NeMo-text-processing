@@ -15,12 +15,7 @@
 import pynini
 from pynini.lib import pynutil
 
-from nemo_text_processing.text_normalization.fa.graph_utils import (
-    NEMO_NOT_QUOTE,
-    GraphFst,
-    delete_space,
-    insert_space,
-)
+from nemo_text_processing.text_normalization.fa.graph_utils import NEMO_NOT_QUOTE, GraphFst, delete_space, insert_space
 
 
 class MeasureFst(GraphFst):
@@ -38,21 +33,13 @@ class MeasureFst(GraphFst):
 
         # Cardinal part
         cardinal_part = (
-            pynutil.delete("cardinal { integer: \"")
-            + pynini.closure(NEMO_NOT_QUOTE, 1)
-            + pynutil.delete("\" }")
+            pynutil.delete("cardinal { integer: \"") + pynini.closure(NEMO_NOT_QUOTE, 1) + pynutil.delete("\" }")
         )
 
         # Decimal part
-        decimal_integer = (
-            pynutil.delete('integer_part: "')
-            + pynini.closure(NEMO_NOT_QUOTE, 1)
-            + pynutil.delete('"')
-        )
+        decimal_integer = pynutil.delete('integer_part: "') + pynini.closure(NEMO_NOT_QUOTE, 1) + pynutil.delete('"')
         decimal_fractional = (
-            pynutil.delete('fractional_part: "')
-            + pynini.closure(NEMO_NOT_QUOTE, 1)
-            + pynutil.delete('"')
+            pynutil.delete('fractional_part: "') + pynini.closure(NEMO_NOT_QUOTE, 1) + pynutil.delete('"')
         )
         decimal_part = (
             pynutil.delete("decimal { ")
@@ -65,11 +52,7 @@ class MeasureFst(GraphFst):
         )
 
         # Units
-        units = (
-            pynutil.delete('units: "')
-            + pynini.closure(NEMO_NOT_QUOTE, 1)
-            + pynutil.delete('"')
-        )
+        units = pynutil.delete('units: "') + pynini.closure(NEMO_NOT_QUOTE, 1) + pynutil.delete('"')
 
         # Graphs
         graph_cardinal_units = cardinal_part + delete_space + insert_space + units

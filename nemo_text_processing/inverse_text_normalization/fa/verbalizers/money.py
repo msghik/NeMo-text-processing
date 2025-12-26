@@ -49,21 +49,13 @@ class MoneyFst(GraphFst):
         # For symbol currencies ($, €, £, ¥) - symbol before amount
         symbol_currencies = pynini.union("$", "€", "£", "¥")
         currency_symbol = (
-            pynutil.delete("currency:")
-            + delete_space
-            + pynutil.delete('"')
-            + symbol_currencies
-            + pynutil.delete('"')
+            pynutil.delete("currency:") + delete_space + pynutil.delete('"') + symbol_currencies + pynutil.delete('"')
         )
 
         # For word currencies (تومان, ریال) - amount before currency
         word_currencies = pynini.union("تومان", "ریال")
         currency_word = (
-            pynutil.delete("currency:")
-            + delete_space
-            + pynutil.delete('"')
-            + word_currencies
-            + pynutil.delete('"')
+            pynutil.delete("currency:") + delete_space + pynutil.delete('"') + word_currencies + pynutil.delete('"')
         )
 
         # Symbol format: $100

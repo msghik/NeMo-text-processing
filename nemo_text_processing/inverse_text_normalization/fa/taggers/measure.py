@@ -45,32 +45,30 @@ class MeasureFst(GraphFst):
         cardinal_graph = itn_cardinal_tagger.graph
 
         # Unit mapping (spoken -> written symbol)
-        unit_map = pynini.string_map([
-            ("درصد", "%"),
-            ("کیلوگرم", "kg"),
-            ("گرم", "g"),
-            ("میلی‌گرم", "mg"),
-            ("کیلومتر", "km"),
-            ("متر", "m"),
-            ("سانتی‌متر", "cm"),
-            ("میلی‌متر", "mm"),
-            ("کیلومتر مربع", "km²"),
-            ("متر مربع", "m²"),
-            ("سانتی‌متر مربع", "cm²"),
-            ("لیتر", "l"),
-            ("میلی‌لیتر", "ml"),
-            ("کیلومتر بر ساعت", "km/h"),
-            ("متر بر ثانیه", "m/s"),
-            ("درجه سانتی‌گراد", "°C"),
-            ("درجه فارنهایت", "°F"),
-        ])
+        unit_map = pynini.string_map(
+            [
+                ("درصد", "%"),
+                ("کیلوگرم", "kg"),
+                ("گرم", "g"),
+                ("میلی‌گرم", "mg"),
+                ("کیلومتر", "km"),
+                ("متر", "m"),
+                ("سانتی‌متر", "cm"),
+                ("میلی‌متر", "mm"),
+                ("کیلومتر مربع", "km²"),
+                ("متر مربع", "m²"),
+                ("سانتی‌متر مربع", "cm²"),
+                ("لیتر", "l"),
+                ("میلی‌لیتر", "ml"),
+                ("کیلومتر بر ساعت", "km/h"),
+                ("متر بر ثانیه", "m/s"),
+                ("درجه سانتی‌گراد", "°C"),
+                ("درجه فارنهایت", "°F"),
+            ]
+        )
 
         # Cardinal component
-        graph_cardinal = (
-            pynutil.insert('cardinal { integer: "')
-            + cardinal_graph
-            + pynutil.insert('" }')
-        )
+        graph_cardinal = pynutil.insert('cardinal { integer: "') + cardinal_graph + pynutil.insert('" }')
 
         # Units
         graph_units = pynutil.insert('units: "') + unit_map + pynutil.insert('"')

@@ -15,8 +15,8 @@
 import pynini
 from pynini.lib import pynutil
 
-from nemo_text_processing.text_normalization.fa.graph_utils import GraphFst, insert_space
 from nemo_text_processing.inverse_text_normalization.fa.utils import get_abs_path
+from nemo_text_processing.text_normalization.fa.graph_utils import GraphFst, insert_space
 
 
 class FractionFst(GraphFst):
@@ -38,17 +38,19 @@ class FractionFst(GraphFst):
         cardinal_graph = pynini.invert(tn_cardinal.cardinal_numbers).optimize()
 
         # Denominator mapping (spoken ordinal -> digit)
-        denominator_map = pynini.string_map([
-            ("دوم", "2"),
-            ("سوم", "3"),
-            ("چهارم", "4"),
-            ("پنجم", "5"),
-            ("ششم", "6"),
-            ("هفتم", "7"),
-            ("هشتم", "8"),
-            ("نهم", "9"),
-            ("دهم", "10"),
-        ])
+        denominator_map = pynini.string_map(
+            [
+                ("دوم", "2"),
+                ("سوم", "3"),
+                ("چهارم", "4"),
+                ("پنجم", "5"),
+                ("ششم", "6"),
+                ("هفتم", "7"),
+                ("هشتم", "8"),
+                ("نهم", "9"),
+                ("دهم", "10"),
+            ]
+        )
 
         graph_numerator = pynutil.insert('numerator: "') + cardinal_graph + pynutil.insert('"')
         graph_denominator = pynutil.insert('denominator: "') + denominator_map + pynutil.insert('"')

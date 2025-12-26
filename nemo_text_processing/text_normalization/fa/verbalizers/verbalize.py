@@ -14,13 +14,13 @@
 
 from nemo_text_processing.text_normalization.fa.graph_utils import GraphFst
 from nemo_text_processing.text_normalization.fa.verbalizers.cardinal import CardinalFst
-from nemo_text_processing.text_normalization.fa.verbalizers.decimal import DecimalFst
-from nemo_text_processing.text_normalization.fa.verbalizers.ordinal import OrdinalFst
-from nemo_text_processing.text_normalization.fa.verbalizers.fraction import FractionFst
-from nemo_text_processing.text_normalization.fa.verbalizers.time import TimeFst
 from nemo_text_processing.text_normalization.fa.verbalizers.date import DateFst
-from nemo_text_processing.text_normalization.fa.verbalizers.money import MoneyFst
+from nemo_text_processing.text_normalization.fa.verbalizers.decimal import DecimalFst
+from nemo_text_processing.text_normalization.fa.verbalizers.fraction import FractionFst
 from nemo_text_processing.text_normalization.fa.verbalizers.measure import MeasureFst
+from nemo_text_processing.text_normalization.fa.verbalizers.money import MoneyFst
+from nemo_text_processing.text_normalization.fa.verbalizers.ordinal import OrdinalFst
+from nemo_text_processing.text_normalization.fa.verbalizers.time import TimeFst
 
 
 class VerbalizeFst(GraphFst):

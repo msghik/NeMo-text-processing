@@ -82,9 +82,7 @@ class CardinalFst(GraphFst):
         graph_thousand_single = pynini.cross("1", "هزار") + pynutil.delete("000")
         graph_thousand_digit = graph_digit + pynutil.insert(" هزار") + pynutil.delete("000")
 
-        graph_thousand_with_hundreds = (
-            graph_digit + pynutil.insert(" هزار") + insert_va + graph_three_digit
-        )
+        graph_thousand_with_hundreds = graph_digit + pynutil.insert(" هزار") + insert_va + graph_three_digit
         graph_thousand_with_tens = (
             graph_digit + pynutil.insert(" هزار") + pynutil.delete("0") + insert_va + graph_two_digit
         )
@@ -92,12 +90,8 @@ class CardinalFst(GraphFst):
             graph_digit + pynutil.insert(" هزار") + pynutil.delete("00") + insert_va + graph_single_digit
         )
 
-        graph_one_thousand_with_hundreds = (
-            pynini.cross("1", "هزار") + insert_va + graph_three_digit
-        )
-        graph_one_thousand_with_tens = (
-            pynini.cross("1", "هزار") + pynutil.delete("0") + insert_va + graph_two_digit
-        )
+        graph_one_thousand_with_hundreds = pynini.cross("1", "هزار") + insert_va + graph_three_digit
+        graph_one_thousand_with_tens = pynini.cross("1", "هزار") + pynutil.delete("0") + insert_va + graph_two_digit
         graph_one_thousand_with_digit = (
             pynini.cross("1", "هزار") + pynutil.delete("00") + insert_va + graph_single_digit
         )
@@ -114,13 +108,7 @@ class CardinalFst(GraphFst):
         )
 
         # Combine all cardinal graphs
-        graph = (
-            graph_zero
-            | graph_single_digit
-            | graph_two_digit
-            | graph_three_digit
-            | graph_four_digit
-        )
+        graph = graph_zero | graph_single_digit | graph_two_digit | graph_three_digit | graph_four_digit
 
         self.cardinal_numbers = graph.optimize()
 
@@ -129,9 +117,7 @@ class CardinalFst(GraphFst):
         self.cardinal_numbers_with_leading_zeros = (leading_zeros + self.cardinal_numbers).optimize()
 
         # Handle negative numbers
-        self.optional_minus_graph = pynini.closure(
-            pynutil.insert("negative: ") + pynini.cross("-", '"true" '), 0, 1
-        )
+        self.optional_minus_graph = pynini.closure(pynutil.insert("negative: ") + pynini.cross("-", '"true" '), 0, 1)
 
         # Final graph with tagging
         final_graph = (

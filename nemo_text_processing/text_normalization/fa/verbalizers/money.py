@@ -15,12 +15,7 @@
 import pynini
 from pynini.lib import pynutil
 
-from nemo_text_processing.text_normalization.fa.graph_utils import (
-    NEMO_NOT_QUOTE,
-    GraphFst,
-    delete_space,
-    insert_space,
-)
+from nemo_text_processing.text_normalization.fa.graph_utils import NEMO_NOT_QUOTE, GraphFst, delete_space, insert_space
 
 
 class MoneyFst(GraphFst):
@@ -37,25 +32,15 @@ class MoneyFst(GraphFst):
         super().__init__(name="money", kind="verbalize", deterministic=deterministic)
 
         # Integer part
-        integer_part = (
-            pynutil.delete('integer_part: "')
-            + pynini.closure(NEMO_NOT_QUOTE, 1)
-            + pynutil.delete('"')
-        )
+        integer_part = pynutil.delete('integer_part: "') + pynini.closure(NEMO_NOT_QUOTE, 1) + pynutil.delete('"')
 
         # Fractional part (for decimal money)
         fractional_part = (
-            pynutil.delete('fractional_part: "')
-            + pynini.closure(NEMO_NOT_QUOTE, 1)
-            + pynutil.delete('"')
+            pynutil.delete('fractional_part: "') + pynini.closure(NEMO_NOT_QUOTE, 1) + pynutil.delete('"')
         )
 
         # Currency
-        currency = (
-            pynutil.delete('currency: "')
-            + pynini.closure(NEMO_NOT_QUOTE, 1)
-            + pynutil.delete('"')
-        )
+        currency = pynutil.delete('currency: "') + pynini.closure(NEMO_NOT_QUOTE, 1) + pynutil.delete('"')
 
         # Graph: Amount + Currency
         # Handle different orderings in the tagged input

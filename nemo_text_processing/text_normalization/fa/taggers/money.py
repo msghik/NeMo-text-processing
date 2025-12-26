@@ -15,12 +15,7 @@
 import pynini
 from pynini.lib import pynutil
 
-from nemo_text_processing.text_normalization.fa.graph_utils import (
-    NEMO_DIGIT,
-    NEMO_SIGMA,
-    GraphFst,
-    insert_space,
-)
+from nemo_text_processing.text_normalization.fa.graph_utils import NEMO_DIGIT, NEMO_SIGMA, GraphFst, insert_space
 from nemo_text_processing.text_normalization.fa.utils import get_abs_path
 
 
@@ -60,17 +55,11 @@ class MoneyFst(GraphFst):
             delete_separator + pynini.closure(NEMO_DIGIT, 3, 3)
         )
         graph_integer_with_sep = (
-            pynutil.insert('integer_part: "')
-            + (number_with_separator @ cardinal_graph)
-            + pynutil.insert('"')
+            pynutil.insert('integer_part: "') + (number_with_separator @ cardinal_graph) + pynutil.insert('"')
         )
 
         # Currency symbol before number: $100, €50, £20
-        graph_symbol_before = (
-            graph_currency
-            + insert_space
-            + (graph_integer | graph_integer_with_sep)
-        )
+        graph_symbol_before = graph_currency + insert_space + (graph_integer | graph_integer_with_sep)
 
         # Currency symbol/word after number: 100$, 50€, 1000 تومان
         graph_symbol_after = (

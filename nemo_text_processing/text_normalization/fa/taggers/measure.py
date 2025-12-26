@@ -15,12 +15,7 @@
 import pynini
 from pynini.lib import pynutil
 
-from nemo_text_processing.text_normalization.fa.graph_utils import (
-    NEMO_ALPHA,
-    NEMO_DIGIT,
-    GraphFst,
-    insert_space,
-)
+from nemo_text_processing.text_normalization.fa.graph_utils import NEMO_ALPHA, NEMO_DIGIT, GraphFst, insert_space
 from nemo_text_processing.text_normalization.fa.utils import get_abs_path
 
 
@@ -48,35 +43,22 @@ class MeasureFst(GraphFst):
         graph_unit = pynutil.insert('units: "') + unit_graph + pynutil.insert('"')
 
         # Build cardinal component
-        graph_cardinal = (
-            pynutil.insert('cardinal { integer: "')
-            + cardinal_graph
-            + pynutil.insert('" }')
-        )
+        graph_cardinal = pynutil.insert('cardinal { integer: "') + cardinal_graph + pynutil.insert('" }')
 
         # Handle negative numbers
         optional_negative = pynini.closure(pynini.cross("-", "منفی "), 0, 1)
         graph_cardinal_with_neg = (
-            pynutil.insert('cardinal { integer: "')
-            + optional_negative
-            + cardinal_graph
-            + pynutil.insert('" }')
+            pynutil.insert('cardinal { integer: "') + optional_negative + cardinal_graph + pynutil.insert('" }')
         )
 
         # Number + Unit (e.g., "50kg", "100 km", "25°C")
         graph_number_unit = (
-            graph_cardinal_with_neg
-            + pynini.closure(pynutil.delete(" "), 0, 1)
-            + insert_space
-            + graph_unit
+            graph_cardinal_with_neg + pynini.closure(pynutil.delete(" "), 0, 1) + insert_space + graph_unit
         )
 
         # Unit + Number (less common, e.g., "kg 50")
         graph_unit_number = (
-            graph_unit
-            + pynini.closure(pynutil.delete(" "), 0, 1)
-            + insert_space
-            + graph_cardinal_with_neg
+            graph_unit + pynini.closure(pynutil.delete(" "), 0, 1) + insert_space + graph_cardinal_with_neg
         )
 
         # Special: percentage
@@ -90,17 +72,8 @@ class MeasureFst(GraphFst):
 
         # Handle decimal measurements if decimal FST is provided
         if decimal is not None:
-            graph_decimal = (
-                pynutil.insert("decimal { ")
-                + decimal.final_graph_decimal
-                + pynutil.insert(" }")
-            )
-            graph_decimal_unit = (
-                graph_decimal
-                + pynini.closure(pynutil.delete(" "), 0, 1)
-                + insert_space
-                + graph_unit
-            )
+            graph_decimal = pynutil.insert("decimal { ") + decimal.final_graph_decimal + pynutil.insert(" }")
+            graph_decimal_unit = graph_decimal + pynini.closure(pynutil.delete(" "), 0, 1) + insert_space + graph_unit
             self.graph = (
                 graph_number_unit
                 | graph_percentage
@@ -108,11 +81,7 @@ class MeasureFst(GraphFst):
                 | pynutil.add_weight(graph_decimal_unit, 0.1)
             )
         else:
-            self.graph = (
-                graph_number_unit
-                | graph_percentage
-                | pynutil.add_weight(graph_unit_number, 0.1)
-            )
+            self.graph = graph_number_unit | graph_percentage | pynutil.add_weight(graph_unit_number, 0.1)
 
         final_graph = self.add_tokens(self.graph)
         self.fst = final_graph.optimize()
